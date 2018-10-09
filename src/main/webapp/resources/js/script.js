@@ -18,13 +18,13 @@ function signin() {
             url: "/signin",
             method: "POST",
             data: { username: login, color: color },
-            success: function (json) {
-                if (json.status != 'error') {
-                    window.location =
-                        "http://" + location.hostname + ":" + location.port +"/?username=" + login;
-                } else {
-                    lable.css({'visibility': 'visible'});
-                }
+            success: function () {
+                window.location =
+                    "http://" + location.hostname + ":" +
+                    location.port +"/?username=" + login;
+            },
+            error: function () {
+                lable.css({'visibility': 'visible'});
             }
         });
 

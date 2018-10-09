@@ -1,5 +1,6 @@
 package ru.tretyakov.controllers;
 
+import com.sun.deploy.net.HttpResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import ru.tretyakov.models.User;
 import ru.tretyakov.service.MessageInterface;
 import ru.tretyakov.service.UserInterface;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -77,13 +79,16 @@ public class WebController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public @ResponseBody
     JSONObject signin(final HttpSession session,
-                      final @ModelAttribute User user) {
+                      final @ModelAttribute User user,
+                      final HttpServletResponse response) {
         if (!userService.isUserExist(user)) {
             session.setAttribute("login", user.getUsername());
             userService.add(user);
             jsonObject.put("status", "ok");
+            response.setStatus(200);
         } else {
             jsonObject.put("status", "error");
+            response.setStatus(403);
         }
         return jsonObject;
     }

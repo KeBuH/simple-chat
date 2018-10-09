@@ -29,7 +29,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(final HttpServletRequest request,
                              final HttpServletResponse response,
                              final Object handler) {
-        if (!request.getRequestURI().equals("/signin")) {
+        if (!"/signin".equals(request.getRequestURI())) {
             if (request.getSession().getAttribute("login") == null) {
                 try {
                     response.sendRedirect("/signin");
